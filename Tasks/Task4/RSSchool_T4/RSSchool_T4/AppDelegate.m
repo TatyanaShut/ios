@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import "PhoneNumberViewController.h"
 
 @interface AppDelegate ()
 
@@ -8,9 +9,16 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    PhoneNumberViewController* vc = [[PhoneNumberViewController alloc] init];
+    [self.window setRootViewController:vc];
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    
+    gradient.frame = _window.bounds;
+    gradient.colors = @[(id)[UIColor whiteColor].CGColor,(id)[UIColor redColor].CGColor];
+    [_window.layer insertSublayer:gradient atIndex:0];
+    [vc release];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -42,5 +50,10 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)dealloc
+{
+    [_window release];
+    [super dealloc];
+}
 
 @end
